@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --rosso-fanconi: #E50914; /* Un rosso acceso e moderno */
@@ -20,9 +20,10 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #0d0d0d;
+            overflow-x: hidden; /* Previene lo scroll orizzontale causato dalle animazioni */
         }
-        .font-teko {
-            font-family: 'Teko', sans-serif;
+        .font-akira {
+            font-family: 'Archivo Black', sans-serif;
         }
         .hero-section {
             background-image: url('https://images.unsplash.com/photo-1553440569-48062a0a6a7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
@@ -70,77 +71,114 @@
             cursor: pointer;
             filter: invert(1);
         }
+        
+        /* Animazione bolle */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(173, 216, 230, 0.2); /* Celeste chiaro */
+            background: radial-gradient(circle at 30% 30%, rgba(173, 216, 230, 0.3), rgba(173, 216, 230, 0.05)); /* Celeste chiaro */
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(15px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        .bubble-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        
+        .bubble-transition-overlay .bubble {
+             animation: rise 1.5s ease-in-out forwards;
+        }
+
+        @keyframes rise {
+            0% { 
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-black text-white">
 
-    <div class="container mx-auto p-4 md:p-8">
+    <div class="container mx-auto p-4 md:p-8 relative">
 
         <!-- Hero Section con Logo -->
         <header class="hero-section relative rounded-xl overflow-hidden min-h-[60vh] flex items-center justify-center text-center p-8 bg-black/60">
             <div class="gradient-overlay absolute inset-0"></div>
-            <div class="relative z-10 text-white">
-                <h1 class="font-teko text-8xl md:text-9xl font-bold tracking-wider uppercase">FANCONI</h1>
-                <p class="text-3xl md:text-4xl font-light tracking-widest -mt-4 md:-mt-6">Car Detailing</p>
-                <div class="text-4xl mt-2" style="color: #FFD700;">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
+            <div class="relative z-10">
+                <img src="https://i.ibb.co/zHspJ8Sc/fanconi.png" alt="Logo Fanconi Detailing" class="max-w-xs md:max-w-lg mx-auto">
             </div>
         </header>
 
-        <main class="py-12">
+        <main class="py-12 relative">
+            
+            <!-- Contenitore Bolle Animate -->
+            <div id="static-bubble-container" class="absolute inset-0 w-full h-full pointer-events-none z-0"></div>
 
             <!-- Packages Section -->
-            <section id="pacchetti" class="mb-16">
-                <h2 class="font-teko text-5xl md:text-6xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
+            <section id="pacchetti" class="mb-16 relative z-10">
+                <h2 class="font-akira text-4xl md:text-5xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 highlight-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
                     Pacchetti <span class="highlight-gold">Esclusivi</span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Bronze -->
-                    <a href="#contatti" class="block">
+                    <!-- Bronze, Silver, Gold, Luxury -->
+                    <a href="#contatti" class="block package-link">
                         <div class="card bg-bronze-gradient text-black p-6 rounded-lg flex flex-col">
-                            <h3 class="font-teko text-4xl font-bold">BRONZE</h3>
+                            <h3 class="font-akira text-3xl">BRONZE</h3>
                             <p class="font-bold text-2xl mb-4">da €90</p>
-                            <ul class="space-y-2 font-semibold flex-grow">
+                            <ul class="space-y-2 font-bold flex-grow">
                                 <li>✓ Detailing esterno</li>
                                 <li>✓ Detailing interni</li>
                                 <li>✓ Pulizia vetri</li>
                             </ul>
                         </div>
                     </a>
-                    <!-- Silver -->
-                    <a href="#contatti" class="block">
+                    <a href="#contatti" class="block package-link">
                         <div class="card bg-silver-gradient text-black p-6 rounded-lg flex flex-col">
-                            <h3 class="font-teko text-4xl font-bold">SILVER</h3>
+                            <h3 class="font-akira text-3xl">SILVER</h3>
                             <p class="font-bold text-2xl mb-4">da €150</p>
-                            <ul class="space-y-2 font-semibold flex-grow">
+                            <ul class="space-y-2 font-bold flex-grow">
                                 <li>✓ Pacchetto Bronze</li>
                                 <li>✓ Sanificazione Ozono</li>
                                 <li>✓ Sedili (estrazione e vapore)</li>
                             </ul>
                         </div>
                     </a>
-                    <!-- Gold -->
-                    <a href="#contatti" class="block">
+                    <a href="#contatti" class="block package-link">
                         <div class="card bg-gold-gradient text-black p-6 rounded-lg flex flex-col">
-                            <h3 class="font-teko text-4xl font-bold">GOLD</h3>
+                            <h3 class="font-akira text-3xl">GOLD</h3>
                             <p class="font-bold text-2xl mb-4">da €220</p>
-                            <ul class="space-y-2 font-semibold flex-grow">
+                            <ul class="space-y-2 font-bold flex-grow">
                                 <li>✓ Pacchetto Silver</li>
                                 <li>✓ Decontaminazione esterni</li>
                                 <li>✓ Lucidatura 1 step + Sigillante</li>
                             </ul>
                         </div>
                     </a>
-                    <!-- Luxury -->
-                    <a href="#contatti" class="block">
+                    <a href="#contatti" class="block package-link">
                         <div class="card bg-gradient-to-br from-red-600 to-red-800 text-white p-6 rounded-lg border-2 border-red-500 flex flex-col">
-                            <h3 class="font-teko text-4xl font-bold">LUXURY</h3>
+                            <h3 class="font-akira text-3xl font-bold">LUXURY</h3>
                             <p class="font-bold text-2xl mb-4">da €750</p>
-                            <ul class="space-y-2 font-semibold flex-grow">
+                            <ul class="space-y-2 font-bold flex-grow">
                                 <li>✓ Pacchetto Gold</li>
                                 <li>✓ Lucidatura 2 step</li>
                                 <li>✓ Trattamento Nano Ceramica</li>
@@ -151,8 +189,8 @@
             </section>
 
             <!-- Services Section -->
-            <section id="servizi" class="mb-16">
-                 <h2 class="font-teko text-5xl md:text-6xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
+            <section id="servizi" class="mb-16 relative z-10">
+                 <h2 class="font-akira text-4xl md:text-5xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 highlight-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10h.01M15 10h.01M9 14h.01M15 14h.01M7 12a5 5 0 0110 0" />
@@ -160,64 +198,66 @@
                     I Nostri <span class="highlight-red">Trattamenti</span>
                  </h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                     <!-- Esterni -->
-                     <div class="bg-custom-gray p-8 rounded-lg" style="background-image: url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position:center; background-blend-mode: overlay;">
-                         <div class="bg-black/70 p-6 rounded-lg">
-                            <h3 class="font-teko text-4xl mb-4">Detailing Esterni</h3>
-                            <ul class="space-y-3">
-                                <li><strong>Lavaggio Manuale Premium:</strong> Shampoo pH neutro, prelavaggio foam e altro. <span class="font-bold float-right">da €35</span></li>
-                                <li><strong>Decontaminazione Esterni:</strong> Rimozione catrame, ferro e resina. <span class="font-bold float-right">da €50</span></li>
-                                <li><strong>Lucidatura Professionale (2-3 Step):</strong> Effetto vetro, rimozione graffi. <span class="font-bold float-right">da €250</span></li>
-                                <li><strong>Trattamento Ceramico (1 anno):</strong> Coating nanotecnologico. <span class="font-bold float-right">da €350</span></li>
-                            </ul>
-                         </div>
+                     <!-- Esterni con immagine -->
+                     <div class="bg-custom-gray rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2102&auto=format&fit=crop" alt="Detailing Esterni" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                           <h3 class="font-akira text-3xl mb-4">Detailing Esterni</h3>
+                           <ul class="space-y-3 font-bold text-gray-300">
+                               <li>Lavaggio Manuale Premium</li>
+                               <li>Decontaminazione Esterni</li>
+                               <li>Lucidatura Professionale</li>
+                               <li>Trattamento Ceramico</li>
+                           </ul>
+                        </div>
                      </div>
-                     <!-- Interni -->
-                     <div class="bg-custom-gray p-8 rounded-lg" style="background-image: url('https://images.unsplash.com/photo-1560443994-5735c5c1634b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position:center; background-blend-mode: overlay;">
-                         <div class="bg-black/70 p-6 rounded-lg">
-                            <h3 class="font-teko text-4xl mb-4">Detailing Interni</h3>
-                            <ul class="space-y-3">
-                                <li><strong>Pulizia Interni Completa:</strong> Aspirazione, plastiche, vetri. <span class="font-bold float-right">da €45</span></li>
-                                <li><strong>Sanificazione + Ozono:</strong> Trattamento antibatterico. <span class="font-bold float-right">da €30</span></li>
-                                <li><strong>Lavaggio Sedili in Stoffa:</strong> Pulizia profonda a estrazione/vapore. <span class="font-bold float-right">da €80</span></li>
-                                <li><strong>Trattamento Sedili in Pelle:</strong> Pulizia, nutrizione e protezione. <span class="font-bold float-right">da €50</span></li>
-                            </ul>
-                         </div>
+                     <!-- Interni con immagine corretta -->
+                     <div class="bg-custom-gray rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2102&auto=format&fit=crop" alt="Detailing Interni" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                           <h3 class="font-akira text-3xl mb-4">Detailing Interni</h3>
+                           <ul class="space-y-3 font-bold text-gray-300">
+                               <li>Pulizia Interni Completa</li>
+                               <li>Sanificazione + Ozono</li>
+                               <li>Lavaggio Sedili in Stoffa</li>
+                               <li>Trattamento Sedili in Pelle</li>
+                           </ul>
+                        </div>
                      </div>
                  </div>
             </section>
             
              <!-- Extra Services Section -->
-            <section id="extra" class="mb-16">
-                <h2 class="font-teko text-5xl md:text-6xl text-center uppercase tracking-wider mb-8">Servizi <span class="highlight-gold">Extra</span></h2>
+            <section id="extra" class="mb-16 relative z-10">
+                <h2 class="font-akira text-4xl md:text-5xl text-center uppercase tracking-wider mb-8">Servizi <span class="highlight-gold">Extra</span></h2>
                 <div class="bg-custom-gray p-8 rounded-lg">
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
-                        <div><p class="text-lg font-semibold">Pulizia Vano Motore</p><p class="text-xl font-bold highlight-gold">da €50</p></div>
-                        <div><p class="text-lg font-semibold">Lucidatura Fari</p><p class="text-xl font-bold highlight-gold">da €60</p></div>
-                        <div><p class="text-lg font-semibold">Trattamento Cerchi Nano</p><p class="text-xl font-bold highlight-gold">da €50</p></div>
-                        <div><p class="text-lg font-semibold">Rifacimento Cielo Auto</p><p class="text-xl font-bold highlight-gold">da €280</p></div>
-                        <div><p class="text-lg font-semibold">Rimozione Peli Animali</p><p class="text-xl font-bold highlight-gold">da €30</p></div>
-                        <div><p class="text-lg font-semibold">Rinnovo Plastiche</p><p class="text-xl font-bold highlight-gold">da €20</p></div>
-                        <div><p class="text-lg font-semibold">Rifacimento Montanti</p><p class="text-xl font-bold highlight-gold">da €40</p></div>
-                        <div><p class="text-lg font-semibold">Trattamento Vetro Idrorepellente</p><p class="text-xl font-bold highlight-gold">da €15</p></div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center font-bold">
+                        <div><p class="text-lg">Pulizia Vano Motore</p><p class="text-xl highlight-gold">da €50</p></div>
+                        <div><p class="text-lg">Lucidatura Fari</p><p class="text-xl highlight-gold">da €60</p></div>
+                        <div><p class="text-lg">Trattamento Cerchi Nano</p><p class="text-xl highlight-gold">da €50</p></div>
+                        <div><p class="text-lg">Rifacimento Cielo Auto</p><p class="text-xl highlight-gold">da €280</p></div>
+                        <div><p class="text-lg">Rimozione Peli Animali</p><p class="text-xl highlight-gold">da €30</p></div>
+                        <div><p class="text-lg">Rinnovo Plastiche</p><p class="text-xl highlight-gold">da €20</p></div>
+                        <div><p class="text-lg">Rifacimento Montanti</p><p class="text-xl highlight-gold">da €40</p></div>
+                        <div><p class="text-lg">Trattamento Vetro Idrorepellente</p><p class="text-xl highlight-gold">da €15</p></div>
                     </div>
                 </div>
             </section>
 
             <!-- Durata Trattamenti -->
-            <section id="durata" class="mb-16">
-                 <h2 class="font-teko text-5xl md:text-6xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
+            <section id="durata" class="mb-16 relative z-10">
+                 <h2 class="font-akira text-4xl md:text-5xl text-center uppercase tracking-wider mb-8 flex items-center justify-center gap-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Tempistiche Indicative
                 </h2>
                 <div class="bg-custom-gray p-8 rounded-lg text-center">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-lg">
-                        <div><p class="font-bold text-xl highlight-gold">Lavaggio Base</p><p class="text-gray-300">~1 ora</p></div>
-                        <div><p class="font-bold text-xl highlight-gold">Interni Completi</p><p class="text-gray-300">2–3 ore</p></div>
-                        <div><p class="font-bold text-xl highlight-gold">Lucidatura</p><p class="text-gray-300">4–8 ore</p></div>
-                        <div><p class="font-bold text-xl highlight-gold">Trattamento Ceramico</p><p class="text-gray-300">1–2 giorni</p></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-lg font-bold">
+                        <div><p class="text-xl highlight-gold">Lavaggio Base</p><p class="text-gray-300 font-normal">~1 ora</p></div>
+                        <div><p class="text-xl highlight-gold">Interni Completi</p><p class="text-gray-300 font-normal">2–3 ore</p></div>
+                        <div><p class="text-xl highlight-gold">Lucidatura</p><p class="text-gray-300 font-normal">4–8 ore</p></div>
+                        <div><p class="text-xl highlight-gold">Trattamento Ceramico</p><p class="text-gray-300 font-normal">1–2 giorni</p></div>
                     </div>
                 </div>
             </section>
@@ -228,14 +268,14 @@
     <footer id="contatti" class="cta-section relative py-20">
         <div class="absolute inset-0 bg-black/80"></div>
         <div class="relative z-10 container mx-auto text-center px-4">
-            <h3 class="font-teko text-6xl md:text-7xl uppercase tracking-wider text-white">Pronto a far <span class="highlight-red">brillare</span> la tua auto?</h3>
-            <p class="text-gray-300 text-xl max-w-2xl mx-auto my-6">Scegli il pacchetto che fa per te e prenota un trattamento. La tua auto ti ringrazierà.</p>
+            <h3 class="font-akira text-5xl md:text-6xl uppercase tracking-wider text-white">Pronto a far <span class="highlight-red">brillare</span> la tua auto?</h3>
+            <p class="text-gray-300 text-xl max-w-2xl mx-auto my-6 font-bold">Scegli il pacchetto che fa per te e prenota un trattamento. La tua auto ti ringrazierà.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button id="openModalBtn" 
                     class="bg-red-600 text-white font-bold py-4 px-10 rounded-full text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-red-500/30 w-full sm:w-auto">
                     Prenota Ora
                 </button>
-                <a href="http://wa.me/3884996441" target="_blank" 
+                <a href="https://wa.me/393884996441" target="_blank" 
                     class="inline-flex items-center justify-center gap-4 bg-green-500 text-white font-bold py-4 px-10 rounded-full text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-full sm:w-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.996 0-3.935-.53-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.433-9.89-9.89-9.89-5.458 0-9.891 4.434-9.891 9.891 0 2.045.632 3.988 1.698 5.611l-1.025 3.748 3.82-1.024z"/>
@@ -245,7 +285,7 @@
             </div>
             <div class="mt-12 text-gray-400">
                 <p>Fanconi Detailing | Tel: +39 388 499 6441</p>
-                <p class="text-sm mt-2">© 2024 Fanconi Detailing. Tutti i diritti riservati.</p>
+                <p class="text-sm mt-2">© 2028 Fanconi Detailing. Tutti i diritti riservati.</p>
                 <p class="text-sm mt-1">Tutti i prezzi sono indicativi e IVA esclusa.</p>
             </div>
         </div>
@@ -254,34 +294,34 @@
     <!-- Booking Modal -->
     <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
         <div class="bg-gray-800 text-white rounded-lg shadow-xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
-            <h2 class="font-teko text-4xl mb-6">MODULO DI PRENOTAZIONE</h2>
+            <h2 class="font-akira text-3xl mb-6">MODULO DI PRENOTAZIONE</h2>
             <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl">&times;</button>
             <form id="bookingForm" action="https://formspree.io/f/movwwokl" method="POST" class="space-y-4">
                 <div>
-                    <label for="carModel" class="block mb-1 font-semibold">1. Marca e Modello Auto</label>
+                    <label for="carModel" class="block mb-1 font-bold">1. Marca e Modello Auto</label>
                     <input type="text" id="carModel" name="Marca e Modello Auto" required class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500">
                 </div>
                  <div>
-                    <label for="date" class="block mb-1 font-semibold">2. Seleziona una Data</label>
+                    <label for="date" class="block mb-1 font-bold">2. Seleziona una Data</label>
                     <input type="date" id="date" name="Data Selezionata" required class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
-                    <label for="address" class="block mb-1 font-semibold">3. Indirizzo Lavoro (via, civico, paese, cap, prov)</label>
+                    <label for="address" class="block mb-1 font-bold">3. Indirizzo Lavoro (via, civico, paese, cap, prov)</label>
                     <input type="text" id="address" name="Indirizzo" required class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
-                    <p class="block mb-2 font-semibold">4. Possiedi uno spazio privato (giardino/corte/posto auto)?</p>
+                    <p class="block mb-2 font-bold">4. Possiedi uno spazio privato (giardino/corte/posto auto)?</p>
                     <div class="flex items-center gap-4">
                         <label class="flex items-center gap-2"><input type="radio" name="Spazio Privato" value="Si" required class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 focus:ring-red-500"> Si</label>
                         <label class="flex items-center gap-2"><input type="radio" name="Spazio Privato" value="No" required class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 focus:ring-red-500"> No</label>
                     </div>
                 </div>
                 <div>
-                    <label for="phone" class="block mb-1 font-semibold">5. Numero di Telefono</label>
+                    <label for="phone" class="block mb-1 font-bold">5. Numero di Telefono</label>
                     <input type="tel" id="phone" name="Numero di Telefono" required class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
-                    <label for="service" class="block mb-1 font-semibold">6. Servizio Richiesto</label>
+                    <label for="service" class="block mb-1 font-bold">6. Servizio Richiesto</label>
                     <select id="service" name="Servizio" required class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500">
                         <option value="">Seleziona un pacchetto...</option>
                         <option value="Bronze">Bronze</option>
@@ -292,7 +332,7 @@
                     </select>
                 </div>
                 <div id="otherServiceContainer" class="hidden">
-                    <label for="otherServiceText" class="block mb-1 font-semibold">Se "Altro", specifica qui la tua richiesta</label>
+                    <label for="otherServiceText" class="block mb-1 font-bold">Se "Altro", specifica qui la tua richiesta</label>
                     <textarea id="otherServiceText" name="Dettagli Servizio 'Altro'" rows="3" class="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-red-500"></textarea>
                 </div>
                 <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg text-xl uppercase transition-colors">
@@ -302,88 +342,158 @@
             <p id="formStatus" class="mt-4 text-center"></p>
         </div>
     </div>
+
+    <!-- Contenitore per la transizione a bolle -->
+    <div id="bubble-transition-overlay" class="bubble-transition-overlay"></div>
     
     <script>
-        // Set min date for date picker to today
-        const datePicker = document.getElementById('date');
-        const today = new Date().toISOString().split('T')[0];
-        datePicker.setAttribute('min', today);
-
-        // Modal logic
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const bookingModal = document.getElementById('bookingModal');
-        
-        openModalBtn.addEventListener('click', () => {
-            bookingModal.classList.remove('hidden');
-        });
-        
-        closeModalBtn.addEventListener('click', () => {
-            bookingModal.classList.add('hidden');
-        });
-
-        // Show/hide "other" service text area
-        const serviceSelect = document.getElementById('service');
-        const otherServiceContainer = document.getElementById('otherServiceContainer');
-        const otherServiceText = document.getElementById('otherServiceText');
-
-        serviceSelect.addEventListener('change', () => {
-            if (serviceSelect.value === 'Altro') {
-                otherServiceContainer.classList.remove('hidden');
-                otherServiceText.required = true;
-            } else {
-                otherServiceContainer.classList.add('hidden');
-                otherServiceText.required = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Logica Bolle Statiche ---
+            const staticBubbleContainer = document.getElementById('static-bubble-container');
+            if (staticBubbleContainer) {
+                const bubbleCount = 20;
+                for (let i = 0; i < bubbleCount; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = Math.random() * 80 + 20; // da 20 a 100px
+                    bubble.style.width = `${size}px`;
+                    bubble.style.height = `${size}px`;
+                    bubble.style.top = `${Math.random() * 100}%`;
+                    bubble.style.left = `${Math.random() * 100}%`;
+                    bubble.style.animationDuration = `${Math.random() * 5 + 8}s`; // da 8 a 13s
+                    bubble.style.animationDelay = `${Math.random() * 5}s`;
+                    staticBubbleContainer.appendChild(bubble);
+                }
             }
-        });
 
-        // Form submission logic
-        const bookingForm = document.getElementById('bookingForm');
-        const formStatus = document.getElementById('formStatus');
+            // --- Logica Transizione a Bolle ---
+            const packageLinks = document.querySelectorAll('.package-link');
+            const transitionOverlay = document.getElementById('bubble-transition-overlay');
 
-        bookingForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const form = e.target;
-            const data = new FormData(form);
-            const submitButton = form.querySelector('button[type="submit"]');
-
-            formStatus.textContent = 'Invio in corso...';
-            formStatus.classList.remove('text-green-500', 'text-red-500');
-            submitButton.disabled = true;
-
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
+            packageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    showBubbleTransition();
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
                 });
+            });
 
-                if (response.ok) {
-                    formStatus.textContent = 'Richiesta inviata con successo!';
-                    formStatus.classList.add('text-green-500');
-                    submitButton.disabled = false;
-                    form.reset();
-                    otherServiceContainer.classList.add('hidden');
-                    setTimeout(() => {
-                        bookingModal.classList.add('hidden');
-                        formStatus.textContent = '';
-                    }, 2000);
-                } else {
-                    const responseData = await response.json();
-                    if (Object.hasOwn(responseData, 'errors')) {
-                        formStatus.textContent = responseData.errors.map(error => error.message).join(", ");
-                    } else {
-                        formStatus.textContent = 'Oops! C\'è stato un problema con l\'invio della richiesta.';
-                    }
-                    formStatus.classList.add('text-red-500');
-                    submitButton.disabled = false;
+            function showBubbleTransition() {
+                if (!transitionOverlay) return;
+                transitionOverlay.innerHTML = '';
+                for (let i = 0; i < 40; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = Math.random() * 100 + 50;
+                    bubble.style.width = `${size}px`;
+                    bubble.style.height = `${size}px`;
+                    bubble.style.left = `${Math.random() * 100}%`;
+                    bubble.style.animationDuration = `1.5s`;
+                    bubble.style.animationDelay = `${Math.random() * 0.5}s`;
+                    transitionOverlay.appendChild(bubble);
                 }
-            } catch (error) {
-                formStatus.textContent = 'Oops! C\'è stato un problema di rete.';
-                formStatus.classList.add('text-red-500');
-                submitButton.disabled = false;
+
+                setTimeout(() => {
+                    transitionOverlay.innerHTML = '';
+                }, 1500); // Rimosso dopo la durata dell'animazione
+            }
+
+            // --- Logica Modulo Prenotazione ---
+            const datePicker = document.getElementById('date');
+            if (datePicker) {
+                const today = new Date().toISOString().split('T')[0];
+                datePicker.setAttribute('min', today);
+            }
+
+            const openModalBtn = document.getElementById('openModalBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const bookingModal = document.getElementById('bookingModal');
+            
+            if (openModalBtn) {
+                openModalBtn.addEventListener('click', () => {
+                    if (bookingModal) bookingModal.classList.remove('hidden');
+                });
+            }
+            
+            if(closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    if (bookingModal) bookingModal.classList.add('hidden');
+                });
+            }
+
+            const serviceSelect = document.getElementById('service');
+            const otherServiceContainer = document.getElementById('otherServiceContainer');
+            const otherServiceText = document.getElementById('otherServiceText');
+
+            if(serviceSelect) {
+                serviceSelect.addEventListener('change', () => {
+                    if (serviceSelect.value === 'Altro') {
+                        otherServiceContainer.classList.remove('hidden');
+                        otherServiceText.required = true;
+                    } else {
+                        otherServiceContainer.classList.add('hidden');
+                        otherServiceText.required = false;
+                    }
+                });
+            }
+
+            const bookingForm = document.getElementById('bookingForm');
+            const formStatus = document.getElementById('formStatus');
+
+            if(bookingForm) {
+                bookingForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const data = new FormData(form);
+                    const submitButton = form.querySelector('button[type="submit"]');
+
+                    formStatus.textContent = 'Invio in corso...';
+                    formStatus.classList.remove('text-green-500', 'text-red-500');
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: form.method,
+                            body: data,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            formStatus.textContent = 'Richiesta inviata con successo!';
+                            formStatus.classList.add('text-green-500');
+                            submitButton.disabled = false;
+                            form.reset();
+                            otherServiceContainer.classList.add('hidden');
+                            setTimeout(() => {
+                                if (bookingModal) bookingModal.classList.add('hidden');
+                                formStatus.textContent = '';
+                            }, 2000);
+                        } else {
+                            const responseData = await response.json();
+                            if (Object.hasOwn(responseData, 'errors')) {
+                                formStatus.textContent = responseData.errors.map(error => error.message).join(", ");
+                            } else {
+                                formStatus.textContent = 'Oops! C\'è stato un problema con l\'invio della richiesta.';
+                            }
+                            formStatus.classList.add('text-red-500');
+                            submitButton.disabled = false;
+                        }
+                    } catch (error) {
+                        formStatus.textContent = 'Oops! C\'è stato un problema di rete.';
+                        formStatus.classList.add('text-red-500');
+                        submitButton.disabled = false;
+                    }
+                });
             }
         });
     </script>
