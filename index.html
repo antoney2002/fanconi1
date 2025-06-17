@@ -202,25 +202,25 @@
                      <div class="bg-custom-gray rounded-lg overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2102&auto=format&fit=crop" alt="Detailing Esterni" class="w-full h-48 object-cover">
                         <div class="p-6">
-                           <h3 class="font-akira text-3xl mb-4">Detailing Esterni</h3>
+                           <h3 class="font-akira text-2xl sm:text-3xl mb-4">Detailing Esterni</h3>
                            <ul class="space-y-3 font-bold text-gray-300">
-                               <li>Lavaggio Manuale Premium</li>
-                               <li>Decontaminazione Esterni</li>
-                               <li>Lucidatura Professionale</li>
-                               <li>Trattamento Ceramico</li>
+                               <li class="clearfix">Lavaggio Manuale Premium <span class="float-right text-white">da €35</span></li>
+                               <li class="clearfix">Decontaminazione Esterni <span class="float-right text-white">da €50</span></li>
+                               <li class="clearfix">Lucidatura Professionale <span class="float-right text-white">da €250</span></li>
+                               <li class="clearfix">Trattamento Ceramico <span class="float-right text-white">da €350</span></li>
                            </ul>
                         </div>
                      </div>
-                     <!-- Interni con immagine corretta -->
+                     <!-- Interni con la stessa immagine degli esterni -->
                      <div class="bg-custom-gray rounded-lg overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1563720223523-291ffb396912?q=80&w=1974&auto=format&fit=crop" alt="Detailing Interni" class="w-full h-48 object-cover">
+                        <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2102&auto=format&fit=crop" alt="Detailing Interni" class="w-full h-48 object-cover">
                         <div class="p-6">
-                           <h3 class="font-akira text-3xl mb-4">Detailing Interni</h3>
+                           <h3 class="font-akira text-2xl sm:text-3xl mb-4">Detailing Interni</h3>
                            <ul class="space-y-3 font-bold text-gray-300">
-                               <li>Pulizia Interni Completa</li>
-                               <li>Sanificazione + Ozono</li>
-                               <li>Lavaggio Sedili in Stoffa</li>
-                               <li>Trattamento Sedili in Pelle</li>
+                               <li class="clearfix">Pulizia Interni Completa <span class="float-right text-white">da €45</span></li>
+                               <li class="clearfix">Sanificazione + Ozono <span class="float-right text-white">da €30</span></li>
+                               <li class="clearfix">Lavaggio Sedili in Stoffa <span class="float-right text-white">da €80</span></li>
+                               <li class="clearfix">Trattamento Sedili in Pelle <span class="float-right text-white">da €50</span></li>
                            </ul>
                         </div>
                      </div>
@@ -268,16 +268,16 @@
     <footer id="contatti" class="cta-section relative py-16 sm:py-20">
         <div class="absolute inset-0 bg-black/80"></div>
         <div class="relative z-10 container mx-auto text-center px-4">
-            <h3 class="font-akira text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider text-white">Pronto a far <span class="highlight-red">brillare</span> la tua auto?</h3>
+            <h3 class="font-akira text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-wider text-white">Pronto a far <span class="highlight-red">brillare</span> la tua auto?</h3>
             <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto my-6 font-bold">Scegli il pacchetto che fa per te e prenota un trattamento. La tua auto ti ringrazierà.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button id="openModalBtn" 
-                    class="bg-red-600 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-xl sm:text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-red-500/30 w-full sm:w-auto">
+                    class="bg-red-600 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-lg sm:text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-red-500/30 w-full sm:w-auto">
                     Prenota Ora
                 </button>
                 <a href="https://wa.me/393884996441" target="_blank" 
-                    class="inline-flex items-center justify-center gap-2 sm:gap-4 bg-green-500 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-xl sm:text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-full sm:w-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex items-center justify-center gap-2 sm:gap-4 bg-green-500 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-lg sm:text-2xl uppercase hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.996 0-3.935-.53-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.433-9.89-9.89-9.89-5.458 0-9.891 4.434-9.891 9.891 0 2.045.632 3.988 1.698 5.611l-1.025 3.748 3.82-1.024z"/>
                     </svg>
                     Contattaci su WhatsApp
@@ -285,7 +285,7 @@
             </div>
             <div class="mt-12 text-gray-400">
                 <p>Fanconi Detailing | Tel: +39 388 499 6441</p>
-                <p class="text-sm mt-2">© 2028 Fanconi Detailing. Tutti i diritti riservati.</p>
+                <p class="text-sm mt-2">© 2031 Fanconi Detailing. Tutti i diritti riservati.</p>
                 <p class="text-sm mt-1">Tutti i prezzi sono indicativi e IVA esclusa.</p>
             </div>
         </div>
